@@ -5,6 +5,9 @@
 
 trigger:
 - master
+
+variables:
+  configuration: release
   
 resources:
   containers:
@@ -23,7 +26,8 @@ stages:
             inputs:
               command: 'build'
               projects: '**/*.csproj'
-              arguments: '--configuration Release --output $(build.artifactstagingdirectory)'
+              arguments: '--configuration $(configuration) --output $(Build.ArtifactStagingDirectory)'
+
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
